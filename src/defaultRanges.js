@@ -24,6 +24,10 @@ const defineds = {
   endOfMonth: endOfMonth(new Date()),
   startOfLastMonth: startOfMonth(addMonths(new Date(), -1)),
   endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
+  startOfLast2Month: startOfMonth(addMonths(new Date(), -2)),
+  endOfLast2Month: endOfMonth(addMonths(new Date(), -2)),
+  startOfLast3Month: startOfMonth(addMonths(new Date(), -3)),
+  endOfLast3Month: endOfMonth(addMonths(new Date(), -3)),
 };
 
 const staticRangeHandler = {
@@ -85,6 +89,20 @@ export const defaultStaticRanges = createStaticRanges([
       endDate: defineds.endOfLastMonth,
     }),
   },
+  {
+    label: 'Last Two Month',
+    range: () => ({
+      startDate: defineds.startOfLast2Month,
+      endDate: defineds.endOfLast2Month,
+    }),
+  },
+  {
+    label: 'Last Three Month',
+    range: () => ({
+      startDate: defineds.startOfLast3Month,
+      endDate: defineds.endOfLast3Month,
+    }),
+  },
 ]);
 
 export const defaultInputRanges = [
@@ -100,21 +118,6 @@ export const defaultInputRanges = [
       if (!isSameDay(range.endDate, defineds.endOfToday)) return '-';
       if (!range.startDate) return '∞';
       return differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
-    },
-  },
-  {
-    label: 'days starting today',
-    range(value) {
-      const today = new Date();
-      return {
-        startDate: today,
-        endDate: addDays(today, Math.max(Number(value), 1) - 1),
-      };
-    },
-    getCurrentValue(range) {
-      if (!isSameDay(range.startDate, defineds.startOfToday)) return '-';
-      if (!range.endDate) return '∞';
-      return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
     },
   },
 ];
